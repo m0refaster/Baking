@@ -1,16 +1,17 @@
 package com.shawn.nichol.bakingapp.Fragments;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 public class SharedViewModel extends ViewModel {
-    private final MutableLiveData<String> stepPosition = new MutableLiveData<>();
+    private int stepPosition;
 
-    public void setStepPosition(String position) {
-        stepPosition.setValue(position);
+    public void setStepPosition(int position) {
+
+        stepPosition = position;
     }
 
-    public MutableLiveData getStepPosition() {
+
+    public int getStepPosition() {
         return stepPosition;
     }
 }

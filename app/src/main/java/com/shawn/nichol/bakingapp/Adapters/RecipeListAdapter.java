@@ -11,7 +11,9 @@ import com.shawn.nichol.bakingapp.Data.ExtractRecipeData;
 import com.shawn.nichol.bakingapp.R;
 
 public class RecipeListAdapter extends RecyclerView.Adapter {
+
     private static final String LOGTAG = "RecipeAdapter";
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.shawn.nichol.bakingapp.Activities.InstructionsActivity;
 import com.shawn.nichol.bakingapp.Adapters.InstructionsAdapter;
 import com.shawn.nichol.bakingapp.Data.InstructionsExtractIngredients;
 import com.shawn.nichol.bakingapp.Data.InstructionsExtractSteps;
@@ -21,6 +22,9 @@ import com.shawn.nichol.bakingapp.R;
 
 public class InstructionsFragment extends Fragment {
     private static final String LOGTAG = "InstructionsFragment";
+
+    public InstructionsActivity mInstructionsActivity;
+    private boolean mTwoPaness;
 
     private RecyclerView mRecyclerView;
     private InstructionsAdapter mAdapter;
@@ -36,6 +40,10 @@ public class InstructionsFragment extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle onSavedInstanceState) {
+
+        mInstructionsActivity = (InstructionsActivity) getActivity();
+        mTwoPaness = mInstructionsActivity.mTwoPane ;
+
 
         View view = inflater.inflate(R.layout.fragment_instructions, container, false);
 
@@ -53,9 +61,7 @@ public class InstructionsFragment extends Fragment {
                 Log.d(LOGTAG, "Step " + (position + 1) + " " +
                         InstructionsExtractSteps.stepsShortDescriptionList.get(position));
 
-                model.setStepPosition("HELP");
-
-//                mPosition.onImageSelected(position);
+                model.setStepPosition(position);
 
 
                 FragmentManager mFragmentManager = getFragmentManager();
@@ -63,12 +69,23 @@ public class InstructionsFragment extends Fragment {
                 StepsFragment mStepsFragment = new StepsFragment();
 
                 FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction
-                        .replace(R.id.instructions_place_holder, mStepsFragment)
-                        // Puts InstructionsFragment on back stack, when back button is press it will
-                        // reload that fragment instead of going back to the RecipeActivity.
-                        .addToBackStack(null)
-                        .commit();
+
+                if(mTwoPaness == true) {
+                    mFragmentTransaction
+                            .replace(R.id.steps_place_holder, mStepsFragment)
+                            // Puts InstructionsFragment on back stack, when back button is press it will
+                            // reload that fragment instead of going back to the RecipeActivity.
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+
+                    mFragmentTransaction
+                            .replace(R.id.instructions_place_holder, mStepsFragment)
+                            // Puts InstructionsFragment on back stack, when back button is press it will
+                            // reload that fragment instead of going back to the RecipeActivity.
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
 
             @Override
@@ -77,8 +94,14 @@ public class InstructionsFragment extends Fragment {
             }
         }));
 
+
+
         mAdapter = new InstructionsAdapter();
         mRecyclerView.setAdapter(mAdapter);
+
+
+
+
 
         return view;
     }
