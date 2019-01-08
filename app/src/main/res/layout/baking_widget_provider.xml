@@ -1,6 +1,4 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#09C"
@@ -14,26 +12,26 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="#09C"
+        android:background="@drawable/widget_title"
         android:contentDescription="@string/appwidget_text"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp"
         android:text="@string/appwidget_text"
-        android:textColor="#ffffff"
         android:textSize="24sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold|italic" />
 
-    <Button
-        android:id="@+id/next_recipe_button"
+    <TextView
+        android:id="@+id/widget_list_view_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/recipe_appwidget_text"
-        android:layout_alignTop="@+id/recipe_appwidget_text"
-        android:layout_alignBottom="@+id/recipe_appwidget_text"
-        android:layout_marginEnd="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/recipe_appwidget_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recipe_appwidget_text" />
+        android:layout_below="@+id/recipe_appwidget_text"
+        android:layout_alignStart="@+id/recipe_appwidget_text"
+        android:layout_marginTop="16dp"
+        android:text="@string/recipe_dummy"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

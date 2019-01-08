@@ -2,6 +2,7 @@ package com.shawn.nichol.bakingapp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,22 +17,25 @@ import com.shawn.nichol.bakingapp.Adapters.RecipeListAdapter;
 import com.shawn.nichol.bakingapp.Data.ExtractRecipeData;
 import com.shawn.nichol.bakingapp.R;
 
+import java.util.Objects;
+
 
 public class RecipeListFragment extends Fragment {
     private final static String LOGTAG = "RecipeRecipeListFragment";
 
-    private RecyclerView mRecyclerView;
-    private RecipeListAdapter mAdapter;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             Bundle onSavedInstanceState) {
 
+        RecyclerView mRecyclerView;
+        RecipeListAdapter mAdapter;
 
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle onSavedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_recipe);
+        mRecyclerView = view.findViewById(R.id.rv_recipe);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(),
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(Objects.requireNonNull(getActivity()).getApplicationContext(),
                 mRecyclerView, new RecyclerTouchListener.ClickListener() {
 
             @Override

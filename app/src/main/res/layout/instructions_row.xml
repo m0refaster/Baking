@@ -1,78 +1,50 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
     android:id="@+id/card_container"
-    android:layout_margin="16dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="8dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    app:cardBackgroundColor="@color/card_background"
+    app:cardCornerRadius="@dimen/card_cornerRadius"
+    app:cardElevation="@dimen/card_cornerRadius"
+    style="@style/recyclerView_cardView_style">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        <View
+            android:id="@+id/view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/instructions_steps_text_view"
+            app:layout_constraintEnd_toEndOf="@+id/instructions_steps_text_view"
+            app:layout_constraintStart_toStartOf="@+id/instructions_steps_text_view"
+            style="@style/recyclerView_ingredients_bar"/>
 
         <TextView
-            android:id="@+id/instructions_steps_tv_row"
+            android:id="@+id/instructions_steps_text_view"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:text="STEP:"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="STEP" />
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="76dp"
-            android:layout_height="2dp"
-            android:layout_alignParentRight="true"
-
-            android:layout_marginEnd="8dp"
-            android:background="#000000"
-            app:layout_constraintBottom_toBottomOf="@+id/instructions_steps_tv_row"
-            app:layout_constraintEnd_toEndOf="@+id/instructions_tv_row"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/instructions_steps_tv_row"
-            app:layout_constraintTop_toTopOf="@+id/instructions_steps_tv_row"
-            app:layout_constraintVertical_bias="0.742" />
+            tools:text="@string/steps_dummy"
+            style="@style/recyclerView_ingredients"/>
 
         <TextView
-            android:id="@+id/instructions_tv_row"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_gravity="center_vertical"
-
-            android:layout_marginStart="4dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/instructions_steps_tv_row"
-            app:layout_constraintStart_toEndOf="@+id/instructions_steps_tv_row"
-            app:layout_constraintTop_toTopOf="@+id/instructions_steps_tv_row"
-            tools:text="##" />
-
-        <TextView
-            android:id="@+id/instructions_shortdescription_tv_row"
+            android:id="@+id/instructions_short_description_tv_row"
+            style="@style/recyclerView_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-
             android:layout_marginStart="32dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/instructions_steps_tv_row"
-            app:layout_constraintTop_toBottomOf="@+id/instructions_steps_tv_row"
-            tools:text="Recipe Inroductions" />
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/instructions_steps_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:text="@string/quick_description_dummy" />
 
 
     </android.support.constraint.ConstraintLayout>

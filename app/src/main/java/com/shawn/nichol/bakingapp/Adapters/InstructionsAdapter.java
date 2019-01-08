@@ -12,8 +12,6 @@ import com.shawn.nichol.bakingapp.R;
 
 public class InstructionsAdapter extends RecyclerView.Adapter  {
 
-   private static final String LOGTAG = "InstructionsAdapter";
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
@@ -34,19 +32,18 @@ public class InstructionsAdapter extends RecyclerView.Adapter  {
     }
 
     private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView mInstructionsTextView;
-        private TextView mShortDescriptionTextView;
+        private final TextView mInstructionsTextView;
+        private final TextView mShortDescriptionTextView;
 
-        public ListViewHolder(View itemView) {
+        private ListViewHolder(View itemView) {
             super(itemView);
-            mInstructionsTextView = (TextView) itemView.findViewById(R.id.instructions_tv_row);
-            mShortDescriptionTextView = (TextView)
-                    itemView.findViewById(R.id.instructions_shortdescription_tv_row);
+            mInstructionsTextView = itemView.findViewById(R.id.instructions_steps_text_view);
+            mShortDescriptionTextView = itemView.findViewById(R.id.instructions_short_description_tv_row);
         }
 
-        public void bindView(int position) {
-            // TODO change recipe list
-            mInstructionsTextView.setText(InstructionsExtractSteps.stepsIdList.get(position));
+        private void bindView(int position) {
+            String steps = "STEPS: " + InstructionsExtractSteps.stepsIdList.get(position);
+            mInstructionsTextView.setText(steps);
             mShortDescriptionTextView.setText(InstructionsExtractSteps.stepsShortDescriptionList.get(position));
         }
 

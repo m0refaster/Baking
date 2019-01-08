@@ -2,6 +2,7 @@ package com.shawn.nichol.bakingapp.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,16 +21,14 @@ import com.shawn.nichol.bakingapp.Data.InstructionsExtractIngredients;
 import com.shawn.nichol.bakingapp.Data.InstructionsExtractSteps;
 import com.shawn.nichol.bakingapp.R;
 
+import java.util.Objects;
+
+@SuppressWarnings("JavaDoc")
 public class InstructionsFragment extends Fragment {
     private static final String LOGTAG = "InstructionsFragment";
 
-    public InstructionsActivity mInstructionsActivity;
-    private boolean mTwoPaness;
+    private boolean mTwoPanes;
 
-    private RecyclerView mRecyclerView;
-    private InstructionsAdapter mAdapter;
-
-    private String mAllIngredients;
 
     private SharedViewModel model;
 
@@ -39,17 +38,19 @@ public class InstructionsFragment extends Fragment {
 
 
 
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle onSavedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle onSavedInstanceState) {
+        RecyclerView mRecyclerView;
+        InstructionsAdapter mAdapter;
 
-        mInstructionsActivity = (InstructionsActivity) getActivity();
-        mTwoPaness = mInstructionsActivity.mTwoPane ;
+        InstructionsActivity instructionsActivity = (InstructionsActivity) getActivity();
+        mTwoPanes = Objects.requireNonNull(instructionsActivity).mTwoPane ;
 
 
         View view = inflater.inflate(R.layout.fragment_instructions, container, false);
 
-        model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SharedViewModel.class);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.ingredients_instructions_rv_fragments);
+        mRecyclerView = view.findViewById(R.id.ingredients_instructions_rv_fragments);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -68,9 +69,9 @@ public class InstructionsFragment extends Fragment {
 
                 StepsFragment mStepsFragment = new StepsFragment();
 
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                FragmentTransaction mFragmentTransaction = Objects.requireNonNull(mFragmentManager).beginTransaction();
 
-                if(mTwoPaness == true) {
+                if(mTwoPanes) {
                     mFragmentTransaction
                             .replace(R.id.steps_place_holder, mStepsFragment)
                             // Puts InstructionsFragment on back stack, when back button is press it will
@@ -94,14 +95,8 @@ public class InstructionsFragment extends Fragment {
             }
         }));
 
-
-
         mAdapter = new InstructionsAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
-
-
-
 
         return view;
     }
@@ -113,19 +108,17 @@ public class InstructionsFragment extends Fragment {
      * @param savedInstanceState
      */
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        TextView mLoadIngredients = (TextView)getView().findViewById(R.id.ingredients_tv_fragment);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        TextView mLoadIngredients = Objects.requireNonNull(getView()).findViewById(R.id.ingredients_tv_fragment);
+        StringBuilder sb = new StringBuilder();
         // Set ingredients to screen
         for(int i = 0; i < InstructionsExtractIngredients.ingredientList.size(); i++) {
-            if(i == 0) {
-                mAllIngredients = "- " + InstructionsExtractIngredients.ingredientList.get(i);
-            } else {
-                mAllIngredients = mAllIngredients + "\n - " + InstructionsExtractIngredients.ingredientList.get(i);
-            }
+            sb.append("- ").append(InstructionsExtractIngredients.ingredientList.get(i)).append("\n");
         }
-        Log.d(LOGTAG, mAllIngredients);
-        mLoadIngredients.setText(mAllIngredients);
+
+        String allIngredients = sb.toString();
+        Log.d(LOGTAG, allIngredients);
+        mLoadIngredients.setText(allIngredients);
     }
 
 

@@ -9,7 +9,8 @@ import com.shawn.nichol.bakingapp.R;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private static final String LOGTAG = "RecipeMainActivity";
+    FragmentManager mFragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +18,15 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe);
 
         // Create Fragment Manager
-        FragmentManager mFragmentManager = getSupportFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         // Gets JSON data, pass FragmentManger to constructor of RecipeData
         RecipeData data = new RecipeData(mFragmentManager);
         data.execute();
-
     }
-
 }

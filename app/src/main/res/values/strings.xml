@@ -4,10 +4,15 @@
     <!--Instructions row-->
     <string name="ingredients"> INGREDIENTS</string>
     <string name="ingredients_list">1 cup of flour</string>
+    <string name="steps_dummy">STEPS: ##</string>
+    <string name="quick_description_dummy">Recipe Instructions</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Recipe-->
+    <string name="recipe_dummy">Dummy Recipe</string>
+
+
+
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
 
 </resources>

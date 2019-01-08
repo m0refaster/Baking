@@ -3,150 +3,169 @@ package com.shawn.nichol.bakingapp.Fragments;
 import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.shawn.nichol.bakingapp.Data.InstructionsExtractSteps;
 import com.shawn.nichol.bakingapp.R;
 
+import java.util.Objects;
+
+
 public class StepsFragment extends Fragment {
+
     private static final String LOGTAG = "StepsFragment";
 
-    private SharedViewModel model;
-    public int mPosition;
+    private PlayerView mExoPlayerView;
+
+    private SimpleExoPlayer mExoPlayer;
+
+    private boolean mPlayWhenReady = true;
+
     private String mURI;
-
-    private TextView mDescriptionTextView;
-
-
-    // EXO player
-    // bandwidth meter to measure and estimate bandwidth
-    private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
-
-    private SimpleExoPlayer player;
-    private PlayerView playerView;
-    private String mDescription;
-    private View view;
-
-    private long playbackPosition;
-    private int currentWindow;
-    private boolean playWhenReady = true;
 
     // Requires an empty constructor
     public StepsFragment() {
     }
 
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_step, container, false);
+//        if(savedInstanceState != null) {
+//            startPosition = savedInstanceState.getLong(KEY_POSITION);
+//        } else {
+//            clearStartPosition();
+//        }
 
-        playerView = view.findViewById(R.id.video_view);
-        mDescriptionTextView = view.findViewById(R.id.fragment_steps_tv);
+        View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        mExoPlayerView = rootView.findViewById(R.id.exo_player_view);
+        TextView stepsTv = rootView.findViewById(R.id.fragment_steps_tv);
 
         // Access ViewModel, for the steps index position
-        model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        SharedViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SharedViewModel.class);
 
+        int position = model.getStepPosition();
+        mURI = InstructionsExtractSteps.stepsVideoList.get(position);
+        String description = InstructionsExtractSteps.stepsDescriptionList.get(position);
 
-        mPosition = model.getStepPosition();
-        mURI = InstructionsExtractSteps.stepsVideoList.get(mPosition);
-        mDescription = InstructionsExtractSteps.stepsDescriptionList.get(mPosition);
-
-        Log.d(LOGTAG, "Index " + mPosition);
-        Log.d(LOGTAG, mDescription);
+        Log.d(LOGTAG, "Index " + position);
+        Log.d(LOGTAG, description);
         Log.d(LOGTAG, "URI " + mURI);
 
-        mDescriptionTextView.setText(mDescription);
+        stepsTv.setText(description);
 
-
-
-
-
-
-
-    }
-
-    private void initializePlayer() {
-
-//        Log.d(LOGTAG, "URI2 " + mURI);
-//        player = ExoPlayerFactory.newSimpleInstance(
-//                new DefaultRenderersFactory(getActivity()),
-//                new DefaultTrackSelector(), new DefaultLoadControl());
-//
-//        playerView.setPlayer(player);
-//
-//        player.setPlayWhenReady(playWhenReady);
-//        player.seekTo(currentWindow, playbackPosition);
-//
-//
-//        Uri uri = Uri.parse(mURI);
-//        MediaSource mediaSource = buildMediaSource(uri);
-//        player.prepare(mediaSource, true, false);
-    }
-
-    private MediaSource buildMediaSource(Uri uri) {
-        return new ExtractorMediaSource.Factory(
-                new DefaultHttpDataSourceFactory("exoplayer-codelab")).
-                createMediaSource(uri);
+        return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
         if (Util.SDK_INT > 23) {
-            initializePlayer();
+            if (!TextUtils.isEmpty(mURI)) {
+                initializePlayer(Uri.parse(mURI));
+//                if(mExoPlayerView != null) {
+//                    mExoPlayer.onResume();
+//                }
+            } else {
+                mExoPlayerView.setVisibility(View.GONE);
+            }
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if ((Util.SDK_INT <= 23 || player == null)) {
-            initializePlayer();
+
+        if (Util.SDK_INT < 23) {
+            if (!TextUtils.isEmpty(mURI)) {
+                initializePlayer(Uri.parse(mURI));
+//                if(mExoPlayerView != null) {
+//                    mExoPlayer.onResume();
+//                }
+            } else {
+                mExoPlayerView.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
+        if(Util.SDK_INT <= 23 || mExoPlayer == null) {
+//            if(mExoPlayerView != null) {
+//                mExoPlayer.onPause();
+//            }
             releasePlayer();
         }
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
+        if(Util.SDK_INT > 23) {
+//            if(mExoPlayerView != null) {
+//                mExoPlayer.onPause();
+//            }
             releasePlayer();
         }
     }
 
+
+    private void initializePlayer(Uri mediaUri) {
+        Log.d(LOGTAG, "initializePlayer mediaUri: " + mediaUri);
+        if(mExoPlayer == null) {
+            DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            @SuppressWarnings("deprecation") TrackSelection.Factory videoTrackSelection = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+            TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelection);
+
+            // Create player
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
+
+            // Bind player to view
+            mExoPlayerView.setPlayer(mExoPlayer);
+
+            // Measure BandWidth during playback.
+            // Produces DataSource instance through which media data is loaded
+            DataSource.Factory dataSource = new DefaultDataSourceFactory(Objects.requireNonNull(getContext()), Util.getUserAgent(getContext(), "Baking"));
+            // MediaSource being played
+            MediaSource videoSource = new ExtractorMediaSource.Factory(dataSource).createMediaSource(mediaUri);
+            // Prepare player
+            mExoPlayer.prepare(videoSource);
+
+            mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+            mExoPlayerView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void releasePlayer() {
-        if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
-            player.release();
-            player = null;
+        if(mExoPlayer!= null) {
+            mPlayWhenReady = mExoPlayer.getPlayWhenReady();
+
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
         }
     }
 }

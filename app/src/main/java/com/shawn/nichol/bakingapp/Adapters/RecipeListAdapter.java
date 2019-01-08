@@ -12,7 +12,6 @@ import com.shawn.nichol.bakingapp.R;
 
 public class RecipeListAdapter extends RecyclerView.Adapter {
 
-    private static final String LOGTAG = "RecipeAdapter";
 
     @NonNull
     @Override
@@ -34,14 +33,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter {
     }
 
     private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView mRecipeTextView;
+        private final TextView mRecipeTextView;
 
-        public ListViewHolder(View itemView) {
+        ListViewHolder(View itemView) {
             super(itemView);
-            mRecipeTextView = (TextView) itemView.findViewById(R.id.recipe_tv);
+            mRecipeTextView = itemView.findViewById(R.id.recipe_tv);
         }
 
-        public void bindView(int position) {
+        void bindView(int position) {
             mRecipeTextView.setText(ExtractRecipeData.recipeList.get(position));
         }
 

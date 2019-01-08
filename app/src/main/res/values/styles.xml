@@ -6,6 +6,39 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="baking_background">
+        <item name="android:background">@drawable/background_color</item>
+    </style>
+
+
+    <style name="recyclerView_cardView_style" parent="CardView">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:layout_margin">@dimen/card_layout_margin</item>
+    </style>
+
+    <style name="recipe_name_style">
+        <item name="android:textColor">@color/card_text</item>
+        <item name="android:textSize">@dimen/recyclerView_title_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/recyclerView_title_padding</item>
+    </style>
+
+    <style name="recyclerView_ingredients">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/card_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="recyclerView_ingredients_bar">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/card_text</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
 </resources>

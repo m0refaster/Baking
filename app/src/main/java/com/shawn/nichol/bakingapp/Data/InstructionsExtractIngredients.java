@@ -13,10 +13,6 @@ public class InstructionsExtractIngredients {
 
     public static ArrayList<String> ingredientList = new ArrayList<>();
 
-    final String PARAM_QUANTITY = "quantity";
-    final String PARAM_MEASURE = "measure";
-    final String PARAM_INGREDIENTS = "ingredient";
-    final String PARAM_STEPS = "steps";
 
     public void ingredientsJson(String jsonString) {
         Log.d(LOGTAG, jsonString);
@@ -31,6 +27,9 @@ public class InstructionsExtractIngredients {
             for(int i = 0; i < jsonArray.length(); i++) {
                 jsonObject = jsonArray.getJSONObject(i);
 
+                String PARAM_QUANTITY = "quantity";
+                String PARAM_MEASURE = "measure";
+                String PARAM_INGREDIENTS = "ingredient";
                 ingredientList.add(jsonObject.getString(PARAM_INGREDIENTS) + " " +
                 jsonObject.getString(PARAM_QUANTITY) + " " +
                 jsonObject.getString(PARAM_MEASURE));
