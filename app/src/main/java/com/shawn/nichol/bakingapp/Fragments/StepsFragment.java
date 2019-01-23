@@ -42,6 +42,10 @@ public class StepsFragment extends Fragment {
 
     private boolean mPlayWhenReady = true;
 
+    private static final String EXTRA_EXO_PLAYER_POSITION = "extraExoPlayerPosition";
+
+    private long position;
+
     private String mURI;
 
     // Requires an empty constructor
@@ -49,12 +53,12 @@ public class StepsFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-//        if(savedInstanceState != null) {
-//            startPosition = savedInstanceState.getLong(KEY_POSITION);
-//        } else {
-//            clearStartPosition();
-//        }
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+          position = savedInstanceState.getLong(EXTRA_EXO_PLAYER_POSITION);
+        } else {
+            position = 0;
+        }
 
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
@@ -78,14 +82,20 @@ public class StepsFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(EXTRA_EXO_PLAYER_POSITION, position);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         if (Util.SDK_INT > 23) {
             if (!TextUtils.isEmpty(mURI)) {
                 initializePlayer(Uri.parse(mURI));
-//                if(mExoPlayerView != null) {
-//                    mExoPlayer.onResume();
-//                }
+                if(mExoPlayerView != null) {
+                    mExoPlayer.seekTo(position);
+                }
             } else {
                 mExoPlayerView.setVisibility(View.GONE);
             }
@@ -99,9 +109,9 @@ public class StepsFragment extends Fragment {
         if (Util.SDK_INT < 23) {
             if (!TextUtils.isEmpty(mURI)) {
                 initializePlayer(Uri.parse(mURI));
-//                if(mExoPlayerView != null) {
-//                    mExoPlayer.onResume();
-//                }
+                if(mExoPlayerView != null) {
+                    mExoPlayer.seekTo(position);
+                }
             } else {
                 mExoPlayerView.setVisibility(View.GONE);
             }
@@ -113,9 +123,9 @@ public class StepsFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if(Util.SDK_INT <= 23 || mExoPlayer == null) {
-//            if(mExoPlayerView != null) {
-//                mExoPlayer.onPause();
-//            }
+            if(mExoPlayerView != null) {
+                position = mExoPlayer.getCurrentPosition();
+            }
             releasePlayer();
         }
 
@@ -125,9 +135,9 @@ public class StepsFragment extends Fragment {
     public void onStop() {
         super.onStop();
         if(Util.SDK_INT > 23) {
-//            if(mExoPlayerView != null) {
-//                mExoPlayer.onPause();
-//            }
+            if(mExoPlayerView != null) {
+                position = mExoPlayer.getCurrentPosition();
+            }
             releasePlayer();
         }
     }
@@ -155,17 +165,17 @@ public class StepsFragment extends Fragment {
             mExoPlayer.prepare(videoSource);
 
             mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+            mExoPlayer.seekTo(position);
             mExoPlayerView.setVisibility(View.VISIBLE);
         }
     }
 
     private void releasePlayer() {
         if(mExoPlayer!= null) {
-            mPlayWhenReady = mExoPlayer.getPlayWhenReady();
-
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
         }
     }
+
 }

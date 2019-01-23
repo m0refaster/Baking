@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.InstructionsActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"
             tools:ignore="InnerclassSeparator" />
 
         <receiver android:name=".BakingWidgetProvider">

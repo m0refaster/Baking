@@ -23,6 +23,10 @@ import java.util.Objects;
 public class RecipeListFragment extends Fragment {
     private final static String LOGTAG = "RecipeRecipeListFragment";
 
+    //
+    public RecipeListFragment() {
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle onSavedInstanceState) {
 
