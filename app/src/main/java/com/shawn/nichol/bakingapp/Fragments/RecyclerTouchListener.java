@@ -8,7 +8,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-@SuppressWarnings("deprecation")
+
 class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
     private final GestureDetector gestureDetector;

@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    private static final String LOGTAG = "RecipeNetworkUtils";
+    private static final String LogTag = "MyLog " + NetworkUtils.class.getSimpleName();
     private static final String RECIPE_BASE_URL =
             "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
@@ -25,7 +25,7 @@ public class NetworkUtils {
 
         Uri uri = Uri.parse(RECIPE_BASE_URL).buildUpon()
                 .build();
-        Log.d(LOGTAG, "URI " + uri);
+        Log.d(LogTag, "URI " + uri);
         URL url = null;
         try {
             url = new URL(uri.toString());

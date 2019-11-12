@@ -7,7 +7,6 @@ class SharedViewModel extends ViewModel {
 
 
     public void setStepPosition(int position) {
-
         stepPosition = position;
     }
 

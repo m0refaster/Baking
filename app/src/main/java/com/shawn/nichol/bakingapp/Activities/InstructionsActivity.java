@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class InstructionsActivity extends AppCompatActivity {
 
-    private static final String LOGTAG = "InstructionsActivity";
+    private static final String LogTag = "MyLog " + InstructionsActivity.class.getSimpleName();
 
 
     public boolean mTwoPane;
@@ -60,7 +60,7 @@ public class InstructionsActivity extends AppCompatActivity {
             mTwoPane = false;
         }
 
-        Log.d(LOGTAG, "mTwoPane " + mTwoPane);
+        Log.d(LogTag, "mTwoPane " + mTwoPane);
 
         Intent mainIntent = getIntent();
 

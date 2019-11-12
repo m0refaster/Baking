@@ -19,7 +19,7 @@ public class InstructionsExtractSteps {
     public void stepsJson(String jsonString) {
 
         final String PARAM_ID = "id";
-        final String PARAM_SHORTDESCRIPTION = "shortDescription";
+        final String PARAM_SHORT_DESCRIPTION = "shortDescription";
         final String PARAM_DESCRIPTION = "description";
         final String PARAM_VIDEO = "videoURL";
 
@@ -39,12 +39,12 @@ public class InstructionsExtractSteps {
                 jsonObject = jsonArray.getJSONObject(i);
 
                 stepsIdList.add(jsonObject.getString(PARAM_ID));
-                stepsShortDescriptionList.add(jsonObject.getString(PARAM_SHORTDESCRIPTION));
+                stepsShortDescriptionList.add(jsonObject.getString(PARAM_SHORT_DESCRIPTION));
                 stepsDescriptionList.add(jsonObject.getString(PARAM_DESCRIPTION));
                 stepsVideoList.add(jsonObject.getString(PARAM_VIDEO));
 
                 Log.d(LOGTAG, PARAM_ID + stepsIdList.get(i));
-                Log.d(LOGTAG, PARAM_SHORTDESCRIPTION + stepsShortDescriptionList.get(i));
+                Log.d(LOGTAG, PARAM_SHORT_DESCRIPTION + stepsShortDescriptionList.get(i));
                 Log.d(LOGTAG, PARAM_DESCRIPTION + stepsDescriptionList.get(i));
                 Log.d(LOGTAG, PARAM_VIDEO + stepsVideoList.get(i));
 

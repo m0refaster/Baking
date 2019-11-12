@@ -34,7 +34,7 @@ import java.util.Objects;
 
 public class StepsFragment extends Fragment {
 
-    private static final String LOGTAG = "StepsFragment";
+    private static final String LogTag = "MyLog " + StepsFragment.class.getSimpleName();
 
     private PlayerView mExoPlayerView;
 
@@ -72,9 +72,9 @@ public class StepsFragment extends Fragment {
         mURI = InstructionsExtractSteps.stepsVideoList.get(position);
         String description = InstructionsExtractSteps.stepsDescriptionList.get(position);
 
-        Log.d(LOGTAG, "Index " + position);
-        Log.d(LOGTAG, description);
-        Log.d(LOGTAG, "URI " + mURI);
+        Log.d(LogTag, "Index " + position);
+        Log.d(LogTag, description);
+        Log.d(LogTag, "URI " + mURI);
 
         stepsTv.setText(description);
 
@@ -144,7 +144,7 @@ public class StepsFragment extends Fragment {
 
 
     private void initializePlayer(Uri mediaUri) {
-        Log.d(LOGTAG, "initializePlayer mediaUri: " + mediaUri);
+        Log.d(LogTag, "initializePlayer mediaUri: " + mediaUri);
         if(mExoPlayer == null) {
             DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
             @SuppressWarnings("deprecation") TrackSelection.Factory videoTrackSelection = new AdaptiveTrackSelection.Factory(bandwidthMeter);

@@ -16,7 +16,7 @@ import com.shawn.nichol.bakingapp.Data.InstructionsExtractIngredients;
  */
 public class BakingWidgetProvider extends AppWidgetProvider {
 
-    private static final String LOGTAG = "Widget";
+    private static final String LogTag = "MyLog " + BakingWidgetProvider.class.getSimpleName();
 //    private static String mRecipeName = "";
 
 
@@ -46,7 +46,7 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         }
         views.setTextViewText(R.id.widget_list_view_text, mAllIngredients.toString());
 
-        Log.d(LOGTAG, mAllIngredients.toString());
+        Log.d(LogTag, mAllIngredients.toString());
 
         // Widgets allow click handlers to only launch pending intents
         views.setOnClickPendingIntent(R.id.recipe_appwidget_text, pendingIntent);
@@ -66,7 +66,7 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     public static void updateRecipeWidget(Context context, AppWidgetManager appWidgetManager,
                                           String recipe, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        Log.d(LOGTAG, "updateRecipeWidget " + recipe);
+        Log.d(LogTag, "updateRecipeWidget " + recipe);
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, recipe, appWidgetId);
 

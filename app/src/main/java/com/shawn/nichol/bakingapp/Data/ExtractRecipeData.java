@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ExtractRecipeData {
-    private final static String LOGTAG = "RecipeExtractRecipeData";
+    private final static String LogTag = "MyLog " + ExtractRecipeData.class.getSimpleName();
 
     // JSON array lists
     public static ArrayList<String> recipeList = new ArrayList<>();
@@ -27,7 +27,7 @@ public class ExtractRecipeData {
         ingredientsJSONList = new ArrayList<>();
         stepsJSONList = new ArrayList<>();
 
-        Log.d(LOGTAG, "RecipeList " + recipeList);
+        Log.d(LogTag, "RecipeList " + recipeList);
 
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
@@ -40,9 +40,9 @@ public class ExtractRecipeData {
                 stepsJSONList.add(jsonObject.getString(PARAM_STEPS));
             }
 
-        Log.d(LOGTAG, PARAM_NAME + recipeList);
-        Log.d(LOGTAG, PARAM_INGREDIENTS + ingredientsJSONList);
-        Log.d(LOGTAG, PARAM_STEPS + stepsJSONList);
+        Log.d(LogTag, PARAM_NAME + recipeList);
+        Log.d(LogTag, PARAM_INGREDIENTS + ingredientsJSONList);
+        Log.d(LogTag, PARAM_STEPS + stepsJSONList);
 
         } catch(JSONException e) {
             e.printStackTrace();

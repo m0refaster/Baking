@@ -19,14 +19,10 @@ public class RecipeActivity extends AppCompatActivity {
 
         // Create Fragment Manager
         mFragmentManager = getSupportFragmentManager();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         // Gets JSON data, pass FragmentManger to constructor of RecipeData
         RecipeData data = new RecipeData(mFragmentManager);
         data.execute();
     }
+
 }

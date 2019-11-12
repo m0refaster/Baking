@@ -2,6 +2,8 @@ package com.shawn.nichol.bakingapp.Data;
 
 import android.util.Log;
 
+import com.shawn.nichol.bakingapp.Activities.InstructionsActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,13 +11,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class InstructionsExtractIngredients {
-    private static final String LOGTAG = "InstructionsExtractIngredients";
+    private static final String LogTag = "MyLog " + InstructionsActivity.class.getSimpleName();
 
     public static ArrayList<String> ingredientList = new ArrayList<>();
 
 
     public void ingredientsJson(String jsonString) {
-        Log.d(LOGTAG, jsonString);
+        Log.d(LogTag, jsonString);
 
         ingredientList = new ArrayList<>();
 
@@ -34,7 +36,7 @@ public class InstructionsExtractIngredients {
                 jsonObject.getString(PARAM_QUANTITY) + " " +
                 jsonObject.getString(PARAM_MEASURE));
 
-                Log.d(LOGTAG, ingredientList.get(i));
+                Log.d(LogTag, ingredientList.get(i));
             }
 
         } catch(JSONException e) {

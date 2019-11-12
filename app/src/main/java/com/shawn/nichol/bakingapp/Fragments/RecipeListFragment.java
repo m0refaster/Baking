@@ -21,7 +21,7 @@ import java.util.Objects;
 
 
 public class RecipeListFragment extends Fragment {
-    private final static String LOGTAG = "RecipeRecipeListFragment";
+    private final static String LogTag = "MyLog " + RecipeListFragment.class.getSimpleName();
 
     //
     public RecipeListFragment() {
@@ -44,15 +44,14 @@ public class RecipeListFragment extends Fragment {
 
             @Override
             public void onClick(View view, int position) {
-                Log.d(LOGTAG, "Clicked " + position);
-                Log.d(LOGTAG, "Recipe: " + ExtractRecipeData.recipeList.get(position));
+                Log.d(LogTag, "Clicked " + position);
+                Log.d(LogTag, "Recipe: " + ExtractRecipeData.recipeList.get(position));
 
                 Intent intent = new Intent(getActivity(), InstructionsActivity.class);
 
                 intent.putExtra("recipe", ExtractRecipeData.recipeList.get(position));
                 intent.putExtra("ingredients", ExtractRecipeData.ingredientsJSONList.get(position));
                 intent.putExtra("steps", ExtractRecipeData.stepsJSONList.get(position));
-//                intent.putExtra("image", ExtractRecipeData.imageJSONList.get(position));
                 startActivity(intent);
             }
 
@@ -61,6 +60,7 @@ public class RecipeListFragment extends Fragment {
 
             }
         }));
+
         mAdapter = new RecipeListAdapter();
         mRecyclerView.setAdapter(mAdapter);
         return view;

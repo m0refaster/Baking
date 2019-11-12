@@ -13,6 +13,7 @@ import java.net.URL;
 
 public class RecipeData extends AsyncTask<String, Void, String> {
 
+    private static final String LogTag = "MyLog " + RecipeData.class.getSimpleName();
     private final FragmentManager mFragmentManager;
 
     public RecipeData(FragmentManager fm) {
@@ -23,8 +24,8 @@ public class RecipeData extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
 
         try{
-            URL movieRequestUrl = NetworkUtils.buildRecipeUrl();
-            return NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
+            URL bakingRequestUrl = NetworkUtils.buildRecipeUrl();
+            return NetworkUtils.getResponseFromHttpUrl(bakingRequestUrl);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -33,8 +34,8 @@ public class RecipeData extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        String LOGTAG = "RecipeData";
-        Log.d(LOGTAG, "Recipe list " + ExtractRecipeData.recipeList);
+
+        Log.d(LogTag, "Recipe list " + ExtractRecipeData.recipeList);
         ExtractRecipeData data = new ExtractRecipeData();
         data.recipeName(result);
 

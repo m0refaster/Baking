@@ -23,19 +23,16 @@ import com.shawn.nichol.bakingapp.R;
 
 import java.util.Objects;
 
-@SuppressWarnings("JavaDoc")
 public class InstructionsFragment extends Fragment {
-    private static final String LOGTAG = "InstructionsFragment";
+    private static final String LogTag = "MyLog " + InstructionsFragment.class.getSimpleName();
 
     private boolean mTwoPanes;
-
 
     private SharedViewModel model;
 
     // Empty constructor
     public InstructionsFragment() {
     }
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle onSavedInstanceState) {
@@ -59,7 +56,7 @@ public class InstructionsFragment extends Fragment {
 
             @Override
             public void onClick(View view, int position) {
-                Log.d(LOGTAG, "Step " + (position + 1) + " " +
+                Log.d(LogTag, "Step " + (position + 1) + " " +
                         InstructionsExtractSteps.stepsShortDescriptionList.get(position));
 
                 model.setStepPosition(position);
@@ -117,13 +114,7 @@ public class InstructionsFragment extends Fragment {
         }
 
         String allIngredients = sb.toString();
-        Log.d(LOGTAG, allIngredients);
+        Log.d(LogTag, allIngredients);
         mLoadIngredients.setText(allIngredients);
     }
-
-
-
-
-
-
 }
