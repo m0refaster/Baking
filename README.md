@@ -16,7 +16,7 @@ The following class are used to retrieve a list of backing recipes from a URL.
 * RecipeListFragment, displays the baking recipes in a recyclerview, allowing the user to select a recipe.
 * RecipeListAdapter, used for recyclerview.
 
-** InstructionsActivity
+## InstructionsActivity
 
 Displays a list of ingredients, and step by step instructions for the selected recipe. This activity
 has a two panel tablet display, to show steps and videos
